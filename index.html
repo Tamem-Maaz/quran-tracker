@@ -2,238 +2,239 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>تقسيم القرآن الكريم حسب الآيات</title>
-    <link rel="manifest" href="manifest.json?v=1">
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js');
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f2f7f5;
-            margin: 0;
-            padding: 10px;
-        }
-        h1 {
-            color: #2a4d69;
-            text-align: center;
-            margin: 20px 0;
-            font-size: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px 4px;
-            text-align: center;
-            font-size: 14px;
-        }
-        th {
-            background-color: #a8d0e6;
-            color: #00334e;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        input[type="checkbox"] {
-            transform: scale(1.3);
-        }
-        .progress-container {
-            margin: 20px auto;
-            width: 90%;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            height: 24px;
-        }
-        .progress-bar {
-            height: 100%;
-            background-color: #4caf50;
-            text-align: center;
-            color: white;
-            line-height: 24px;
-            font-weight: bold;
-        }
-        #resetBtn {
-            display: none;
-            margin: 20px auto;
-            background-color: #e53935;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        @media screen and (max-width: 600px) {
-            th, td {
-                font-size: 12px;
-                padding: 6px 2px;
-            }
-            h1 {
-                font-size: 18px;
-            }
-            input[type="checkbox"] {
-                transform: scale(1.2);
-            }
-            #resetBtn {
-                font-size: 14px;
-                padding: 8px 16px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تقسيم القرآن الكريم - كرت بكرت</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #2a4d69;
+      margin-bottom: 20px;
+    }
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      max-width: 350px;
+      margin: 0 auto;
+      display: none;
+    }
+    .card.active {
+      display: block;
+    }
+    .card h2 {
+      margin-top: 0;
+      color: #2a4d69;
+    }
+    .info {
+      margin-top: 10px;
+      text-align: right;
+    }
+    .info div {
+      background-color: #f1f3f6;
+      margin: 6px 0;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    .controls {
+      margin-top: 20px;
+    }
+    button {
+      font-size: 16px;
+      padding: 10px 18px;
+      margin: 6px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .done-btn {
+      background-color: #4caf50;
+      color: white;
+    }
+    .nav-btn {
+      background-color: #0077b6;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <h1>تقسيم القرآن الكريم إلى أقسام حسب كل 1000 آية</h1>
-    <table>
-        <tr>
-            <th>تم</th>
-            <th>القسم</th>
-            <th>من</th>
-            <th>إلى</th>
-            <th>عدد الآيات</th>
-            <th>الأجزاء</th>
-            <th>الصفحات</th>
-            <th>الوقت (ساعات)</th>
-        </tr>
+  <h1>تقسيم القرآن الكريم إلى 7 أقسام</h1>
 
-        <tr>
-            <td><input type="checkbox" id="chk0" onclick="saveCheckboxState(0); updateProgress();"></td>
-            <td>1</td>
-            <td>الفاتحة 1</td>
-            <td>النساء 23</td>
-            <td>1000</td>
-            <td>1 - 6</td>
-            <td>113</td>
-            <td>1.88</td>
-        </tr>
-    
-        <tr>
-            <td><input type="checkbox" id="chk1" onclick="saveCheckboxState(1); updateProgress();"></td>
-            <td>2</td>
-            <td>النساء 24</td>
-            <td>التوبة 92</td>
-            <td>1000</td>
-            <td>6 - 11</td>
-            <td>88</td>
-            <td>1.47</td>
-        </tr>
-    
-        <tr>
-            <td><input type="checkbox" id="chk2" onclick="saveCheckboxState(2); updateProgress();"></td>
-            <td>3</td>
-            <td>التوبة 93</td>
-            <td>النحل 128</td>
-            <td>1000</td>
-            <td>11 - 16</td>
-            <td>95</td>
-            <td>1.58</td>
-        </tr>
-    
-        <tr>
-            <td><input type="checkbox" id="chk3" onclick="saveCheckboxState(3); updateProgress();"></td>
-            <td>4</td>
-            <td>الإسراء 1</td>
-            <td>النور 20</td>
-            <td>1000</td>
-            <td>15 - 19</td>
-            <td>84</td>
-            <td>1.4</td>
-        </tr>
-    
-        <tr>
-            <td><input type="checkbox" id="chk4" onclick="saveCheckboxState(4); updateProgress();"></td>
-            <td>5</td>
-            <td>النور 21</td>
-            <td>الأحزاب 31</td>
-            <td>1000</td>
-            <td>19 - 22</td>
-            <td>79</td>
-            <td>1.32</td>
-        </tr>
-    
-        <tr>
-            <td><input type="checkbox" id="chk5" onclick="saveCheckboxState(5); updateProgress();"></td>
-            <td>6</td>
-            <td>الأحزاب 32</td>
-            <td>فصلت 46</td>
-            <td>1000</td>
-            <td>22 - 25</td>
-            <td>76</td>
-            <td>1.27</td>
-        </tr>
-    
-        <tr>
-            <td><input type="checkbox" id="chk6" onclick="saveCheckboxState(6); updateProgress();"></td>
-            <td>7</td>
-            <td>فصلت 47</td>
-            <td>الناس 6</td>
-            <td>1236</td>
-            <td>25 - 30</td>
-            <td>69</td>
-            <td>1.15</td>
-        </tr>
-    
-    </table>
-
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar">0%</div>
+    <div class="card active" id="card0">
+      <h2>القسم 1</h2>
+      <div class="info">
+        <div><strong>من:</strong> الفاتحة 1</div>
+        <div><strong>إلى:</strong> النساء 23</div>
+        <div><strong>عدد الآيات:</strong> 1000</div>
+        <div><strong>الأجزاء:</strong> 1 - 6</div>
+        <div><strong>الصفحات:</strong> 113</div>
+        <div><strong>الوقت (ساعات):</strong> 1.88</div>
+      </div>
+      <div class="controls">
+        <button class="done-btn" onclick="markDone(0)">✅ تم الانتهاء</button>
+      </div>
     </div>
+    
+    <div class="card " id="card1">
+      <h2>القسم 2</h2>
+      <div class="info">
+        <div><strong>من:</strong> النساء 24</div>
+        <div><strong>إلى:</strong> التوبة 92</div>
+        <div><strong>عدد الآيات:</strong> 1000</div>
+        <div><strong>الأجزاء:</strong> 6 - 11</div>
+        <div><strong>الصفحات:</strong> 88</div>
+        <div><strong>الوقت (ساعات):</strong> 1.47</div>
+      </div>
+      <div class="controls">
+        <button class="done-btn" onclick="markDone(1)">✅ تم الانتهاء</button>
+      </div>
+    </div>
+    
+    <div class="card " id="card2">
+      <h2>القسم 3</h2>
+      <div class="info">
+        <div><strong>من:</strong> التوبة 93</div>
+        <div><strong>إلى:</strong> النحل 128</div>
+        <div><strong>عدد الآيات:</strong> 1000</div>
+        <div><strong>الأجزاء:</strong> 11 - 16</div>
+        <div><strong>الصفحات:</strong> 95</div>
+        <div><strong>الوقت (ساعات):</strong> 1.58</div>
+      </div>
+      <div class="controls">
+        <button class="done-btn" onclick="markDone(2)">✅ تم الانتهاء</button>
+      </div>
+    </div>
+    
+    <div class="card " id="card3">
+      <h2>القسم 4</h2>
+      <div class="info">
+        <div><strong>من:</strong> الإسراء 1</div>
+        <div><strong>إلى:</strong> النور 20</div>
+        <div><strong>عدد الآيات:</strong> 1000</div>
+        <div><strong>الأجزاء:</strong> 15 - 19</div>
+        <div><strong>الصفحات:</strong> 84</div>
+        <div><strong>الوقت (ساعات):</strong> 1.4</div>
+      </div>
+      <div class="controls">
+        <button class="done-btn" onclick="markDone(3)">✅ تم الانتهاء</button>
+      </div>
+    </div>
+    
+    <div class="card " id="card4">
+      <h2>القسم 5</h2>
+      <div class="info">
+        <div><strong>من:</strong> النور 21</div>
+        <div><strong>إلى:</strong> الأحزاب 31</div>
+        <div><strong>عدد الآيات:</strong> 1000</div>
+        <div><strong>الأجزاء:</strong> 19 - 22</div>
+        <div><strong>الصفحات:</strong> 79</div>
+        <div><strong>الوقت (ساعات):</strong> 1.32</div>
+      </div>
+      <div class="controls">
+        <button class="done-btn" onclick="markDone(4)">✅ تم الانتهاء</button>
+      </div>
+    </div>
+    
+    <div class="card " id="card5">
+      <h2>القسم 6</h2>
+      <div class="info">
+        <div><strong>من:</strong> الأحزاب 32</div>
+        <div><strong>إلى:</strong> فصلت 46</div>
+        <div><strong>عدد الآيات:</strong> 1000</div>
+        <div><strong>الأجزاء:</strong> 22 - 25</div>
+        <div><strong>الصفحات:</strong> 76</div>
+        <div><strong>الوقت (ساعات):</strong> 1.27</div>
+      </div>
+      <div class="controls">
+        <button class="done-btn" onclick="markDone(5)">✅ تم الانتهاء</button>
+      </div>
+    </div>
+    
+    <div class="card " id="card6">
+      <h2>القسم 7</h2>
+      <div class="info">
+        <div><strong>من:</strong> فصلت 47</div>
+        <div><strong>إلى:</strong> الناس 6</div>
+        <div><strong>عدد الآيات:</strong> 1236</div>
+        <div><strong>الأجزاء:</strong> 25 - 30</div>
+        <div><strong>الصفحات:</strong> 69</div>
+        <div><strong>الوقت (ساعات):</strong> 1.15</div>
+      </div>
+      <div class="controls">
+        <button class="done-btn" onclick="markDone(6)">✅ تم الانتهاء</button>
+      </div>
+    </div>
+    
+<div class="controls" id="finalReset" style="display:none;">
+  <button class="done-btn" onclick="resetAll()">🔄 إعادة التعيين والبدء من جديد</button>
+</div>
+<div class="controls">
+  <button class="nav-btn" onclick="prevCard()">السابق</button>
+  <button class="nav-btn" onclick="nextCard()">التالي</button>
+</div>
 
-    <button id="resetBtn" onclick="resetAll()">إعادة التعيين والبدء من جديد</button>
+<script>
+  let current = 0;
+  const total = 7;
 
-    <script>
-        function saveCheckboxState(index) {
-            const checkbox = document.getElementById("chk" + index);
-            localStorage.setItem("chk" + index, checkbox.checked);
-        }
+  function showCard(index) {
+    for (let i = 0; i < total; i++) {
+      document.getElementById("card" + i).classList.remove("active");
+    }
+    document.getElementById("card" + index).classList.add("active");
+    document.getElementById("finalReset").style.display = (index === total - 1) ? "block" : "none";
+  }
 
-        function loadCheckboxStates() {
-            for (let i = 0; i < 10; i++) {
-                const checkbox = document.getElementById("chk" + i);
-                if (checkbox) {
-                    checkbox.checked = localStorage.getItem("chk" + i) === "true";
-                }
-            }
-            updateProgress();
-        }
+  function nextCard() {
+    if (localStorage.getItem("cardDone" + current) !== "true") {
+      alert("يجب إنهاء هذا القسم أولاً.");
+      return;
+    }
+    if (current < total - 1) {
+      current++;
+      showCard(current);
+    }
+  }
 
-        function updateProgress() {
-            const total = 7;
-            let done = 0;
-            for (let i = 0; i < total; i++) {
-                const checkbox = document.getElementById("chk" + i);
-                if (checkbox && checkbox.checked) done++;
-            }
-            const percent = Math.round((done / total) * 100);
-            const bar = document.getElementById("progressBar");
-            bar.style.width = percent + "%";
-            bar.textContent = percent + "%";
+  function prevCard() {
+    if (current > 0) {
+      current--;
+      showCard(current);
+    }
+  }
 
-            const resetBtn = document.getElementById("resetBtn");
-            resetBtn.style.display = (done === total) ? "block" : "none";
-        }
+  function markDone(index) {
+    localStorage.setItem("cardDone" + index, "true");
+    alert("✅ تم تسجيل انتهاء هذا القسم.");
+  }
 
-        function resetAll() {
-            for (let i = 0; i < 10; i++) {
-                const checkbox = document.getElementById("chk" + i);
-                if (checkbox) {
-                    checkbox.checked = false;
-                    localStorage.removeItem("chk" + i);
-                }
-            }
-            updateProgress();
-        }
+  function resetAll() {
+    for (let i = 0; i < total; i++) {
+      localStorage.removeItem("cardDone" + i);
+    }
+    current = 0;
+    showCard(current);
+  }
 
-        window.onload = loadCheckboxStates;
-    </script>
+  window.onload = () => {
+    for (let i = 0; i < total; i++) {
+      if (localStorage.getItem("cardDone" + i) !== "true") {
+        current = i;
+        break;
+      } else {
+        current = total - 1;
+      }
+    }
+    showCard(current);
+  };
+</script>
 </body>
 </html>
